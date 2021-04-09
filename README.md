@@ -16,7 +16,7 @@ Additional information:
 - the url is ``/bookmarks``
 - Each bookmark of the list  displays the common information and CTAs to update or delete it.
 - Bookmarks data will be stored in the session storage for simplicity reasons. Of course in a real project it should be stored in a backend
-- Each page have 5 items (to be able to test the pagination quickly)
+- Each page have 3 items (to be able to test the pagination quickly)
 - The list is sorted from the newest to the oldest bookmark
 
 ## 2 - Display a bookmark
