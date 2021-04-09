@@ -1,0 +1,105 @@
+{
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  },
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": [
+      "warn",
+      {
+        "allowExpressions": true
+      }
+    ],
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "arrow-parens": [
+      "error",
+      "always"
+    ],
+    "import/no-named-as-default": "off",
+    "import/prefer-default-export": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          [
+            "external",
+            "builtin"
+          ],
+          [
+            "internal"
+          ],
+          [
+            "index",
+            "sibling",
+            "parent"
+          ]
+        ],
+        "pathGroups": [
+          {
+            "pattern": "@blade-group/**",
+            "group": "external"
+          }
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "jsx-a11y/media-has-caption": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/prop-types": "off",
+    "react/state-in-constructor": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-key": "warn",
+    "@typescript-eslint/no-use-before-define": "off",
+    "object-property-newline": "error",
+    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "max-len": [
+      "warn",
+      {
+        "code": 150
+      }
+    ],
+    "@typescript-eslint/ban-ts-comment": ["warn", {
+      "ts-expect-error": "allow-with-description",
+      "ts-ignore": "allow-with-description",
+      "ts-nocheck": "allow-with-description",
+      "ts-check": "allow-with-description"
+    }],
+    "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "react/require-default-props": "off",
+    "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/member-delimiter-style": "error"
+  }
+}
