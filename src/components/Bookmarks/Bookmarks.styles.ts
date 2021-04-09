@@ -8,12 +8,31 @@ export const BookmarkListItem = styled.div`
     rgb(0 0 0 / 12%) 0px 1px 3px 0px;
 `;
 
+export const Title = styled.div`
+  display: flex;
+  align-items: baseline;
+`;
+
 export const Url = styled.h1`
   font-size: 16px;
   font-weight: bold;
+  
+  &:not(:first-child) {
+    margin-right: 10px;
+  }
+`;
+
+export const Keyword = styled.div`
+  margin-left: 10px;
+  font-size: 12px;
+  background-color: #2196f3;
+  color: white;
+  padding: 0 5px;
+  border-radius: 2px;
 `;
 
 export const Metadata = styled.p`
+  margin-top: 0;
   font-size: 12px;
 `;
 

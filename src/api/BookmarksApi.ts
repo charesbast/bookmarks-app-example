@@ -3,7 +3,7 @@ import { isBookmarks } from 'src/utils/runtime-validation/bookmarksValidation';
 
 const BOOKMARKS_SESSION_STORAGE_KEY = 'my-bookmarks';
 
-// TODO: to remove
+// TODO: mocked data to remove
 const initialBookmarks: Bookmark[] = [
   {
     id: 'bookmark1',
@@ -14,7 +14,7 @@ const initialBookmarks: Bookmark[] = [
     width: 200,
     height: 200,
     duration: 340,
-    keywords: [],
+    keywords: ['techno', 'live', 'trendy'],
   },
   {
     id: 'bookmark2',
@@ -25,7 +25,7 @@ const initialBookmarks: Bookmark[] = [
     width: 200,
     height: 200,
     duration: 340,
-    keywords: [],
+    keywords: ['techno', 'concert'],
   },
   {
     id: 'bookmark3',
@@ -36,7 +36,7 @@ const initialBookmarks: Bookmark[] = [
     width: 200,
     height: 200,
     duration: 340,
-    keywords: [],
+    keywords: ['video', 'film', 'français'],
   },
   {
     id: 'bookmark4',
@@ -47,7 +47,7 @@ const initialBookmarks: Bookmark[] = [
     width: 200,
     height: 200,
     duration: 340,
-    keywords: [],
+    keywords: ['série', 'US', 'comédie'],
   },
 ];
 

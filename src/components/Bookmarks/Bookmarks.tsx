@@ -3,7 +3,9 @@ import React, { FunctionComponent } from 'react';
 import {
   Container,
   BookmarkListItem,
+  Title,
   Url,
+  Keyword,
   Metadata,
   Toolbar,
   ModifyButton,
@@ -19,12 +21,17 @@ interface Props {
 const Bookmarks: FunctionComponent<Props> = ({
   className,
   bookmarks,
-  children,
 }) => (
   <Container className={className}>
     {bookmarks.map((bookmark) => (
       <BookmarkListItem key={bookmark.id}>
-        <Url>{bookmark.url}</Url>
+        <Title>
+          <Url>{bookmark.url}</Url>
+          {bookmark.keywords.map((keyword, idx) => (
+            <Keyword key={idx}>{keyword}</Keyword>
+          ))}
+        </Title>
+
         <Metadata>
           {bookmark.title}
           {', '}
@@ -32,13 +39,13 @@ const Bookmarks: FunctionComponent<Props> = ({
           {', '}
           {bookmark.createdAt}
         </Metadata>
+
         <Toolbar>
           <ModifyButton type="button">Modify</ModifyButton>
           <DeleteButton type="button">Delete</DeleteButton>
         </Toolbar>
       </BookmarkListItem>
     ))}
-    {children}
   </Container>
 );
 
