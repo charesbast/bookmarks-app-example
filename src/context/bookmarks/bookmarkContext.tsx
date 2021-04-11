@@ -38,7 +38,7 @@ export const BookmarksProvider: FunctionComponent = (props) => {
   );
 
   function addBookmark(newBookmark: Bookmark): void {
-    updateBookmarks([...bookmarks, newBookmark]);
+    updateBookmarks([newBookmark, ...bookmarks]);
   }
 
   function deleteBookmark(id: string): void {
