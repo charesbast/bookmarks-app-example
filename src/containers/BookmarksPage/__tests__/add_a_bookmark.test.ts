@@ -1,0 +1,92 @@
+import {
+  RenderResult,
+  fireEvent,
+  screen,
+  waitFor,
+} from '@testing-library/react';
+
+import BookmarksApi from 'src/api/BookmarksApi';
+import { RoutePath } from 'src/types/routing.types';
+import { mockBookmark } from 'src/utils/testing/mocks/bookmarkMocks';
+import { renderApp } from 'src/utils/testing/testRenderer';
+
+const renderBookmarksPage = (): RenderResult => renderApp({
+  route: RoutePath.Bookmarks,
+});
+
+const createBookmarkSpy = jest.spyOn(BookmarksApi, 'createBookmark');
+
+describe('Add a bookmark tests', () => {
+  beforeEach(() => {
+    createBookmarkSpy.mockResolvedValue(mockBookmark());
+  });
+
+  describe('When typing something in the text input', () => {
+    function changeTextInput(text: string): void {
+      fireEvent.change(
+        screen.getByTestId('addBookmarkForm-textInput'),
+        { target: { value: text } },
+      );
+    }
+
+    it('Should enable the submit button', () => {
+      renderBookmarksPage();
+
+      changeTextInput('something');
+
+      expect(screen.getByTestId('addBookmarkForm-submitBtn')).not.toHaveAttribute('disabled');
+    });
+
+    describe('When clicking on the submit button', () => {
+      function clickOnSubmitButton(): void {
+        screen.getByTestId('addBookmarkForm-submitBtn').click();
+      }
+
+      it('Should call BookmarksApi.createBookmark with the correct param', async () => {
+        renderBookmarksPage();
+
+        changeTextInput('something');
+        clickOnSubmitButton();
+
+        await waitFor(() => {
+          expect(createBookmarkSpy).toHaveBeenCalledWith('something');
+        });
+      });
+
+      describe('When the BookmarksApi.createBookmark call rejects', () => {
+        const errorMsg = 'Something happened';
+
+        beforeEach(() => {
+          createBookmarkSpy.mockRejectedValue(new Error(errorMsg));
+        });
+
+        it('Should display an error message and enable the submit button when BookmarksApi.createBookmark call rejects', async () => {
+          renderBookmarksPage();
+
+          changeTextInput('something');
+          clickOnSubmitButton();
+
+          expect(await screen.findByTestId('addBookmarkForm-error')).toHaveTextContent(errorMsg);
+        });
+      });
+
+      describe('When the BookmarksApi.createBookmark call resolves', () => {
+        const createdBookmark = mockBookmark({ id: 'createdBookmarkId' });
+
+        beforeEach(() => {
+          createBookmarkSpy.mockResolvedValue(createdBookmark);
+        });
+
+        it('Should add the created bookmark to the displayed list', async () => {
+          renderBookmarksPage();
+
+          changeTextInput('something');
+          clickOnSubmitButton();
+
+          expect(await screen.findByTestId(`bookmark-${createdBookmark.id}`)).toBeInTheDocument();
+          expect(screen.queryByTestId('addBookmarkForm-error')).not.toBeInTheDocument();
+        });
+      });
+    });
+  });
+});

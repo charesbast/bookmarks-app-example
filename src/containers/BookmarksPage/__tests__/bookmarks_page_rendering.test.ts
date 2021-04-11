@@ -1,4 +1,4 @@
-import { RenderResult } from '@testing-library/react';
+import { RenderResult, screen } from '@testing-library/react';
 
 import BookmarksApi from 'src/api/BookmarksApi';
 import { RoutePath } from 'src/types/routing.types';
@@ -14,6 +14,31 @@ const getBookmarksSpy = jest.spyOn(BookmarksApi, 'getBookmarks');
 describe('Bookmarks page rendering tests', () => {
   beforeEach(() => {
     getBookmarksSpy.mockReturnValue(mockedBookmarkList);
+  });
+
+  describe('Add a bookmark section', () => {
+    it('Should display the section title', () => {
+      const { getByRole } = renderBookmarksPage();
+      expect(getByRole('heading', { name: 'Add a bookmark' })).toBeInTheDocument();
+    });
+
+    it('Should render a text input empty by default', () => {
+      const { getByTestId } = renderBookmarksPage();
+      const textInput = getByTestId('addBookmarkForm-textInput');
+      expect(textInput).toBeInTheDocument();
+      expect(textInput).toHaveAttribute('type', 'text');
+      expect(textInput).toHaveAttribute('placeholder', 'Type the bookmark url here');
+      expect(textInput).toHaveAttribute('value', '');
+    });
+
+    it('Should render a disabled submit button by default', () => {
+      const { getByTestId } = renderBookmarksPage();
+      const submitBtn = getByTestId('addBookmarkForm-submitBtn');
+      expect(submitBtn).toBeInTheDocument();
+      expect(submitBtn).toHaveAttribute('type', 'submit');
+      expect(submitBtn).toHaveAttribute('disabled');
+      expect(submitBtn).toHaveTextContent('Submit');
+    });
   });
 
   describe('My bookmarks section', () => {
@@ -56,26 +81,25 @@ describe('Bookmarks page rendering tests', () => {
     });
 
     describe('When a bookmark from the list is clicked', () => {
-      function clickOnBookmarkItem(bookmarkId: string) {
-        return ({ getByTestId }: RenderResult) => getByTestId(`bookmark-${bookmarkId}`).click();
+      function clickOnBookmarkItem(bookmarkId: string): void {
+        screen.getByTestId(`bookmark-${bookmarkId}`).click();
       }
 
       it('Should display the clicked bookmark complete data', () => {
         const clickedBookmark = mockedBookmarkList[2];
-        const renderResult = renderBookmarksPage();
-        const { getByTestId } = renderResult;
+        renderBookmarksPage();
 
-        clickOnBookmarkItem(clickedBookmark.id)(renderResult);
+        clickOnBookmarkItem(clickedBookmark.id);
 
-        expect(getByTestId('selectedBookmark')).toBeInTheDocument();
-        expect(getByTestId('selectedBookmark-id')).toHaveTextContent(clickedBookmark.id);
-        expect(getByTestId('selectedBookmark-url')).toHaveTextContent(clickedBookmark.url);
-        expect(getByTestId('selectedBookmark-author')).toHaveTextContent(clickedBookmark.author);
-        expect(getByTestId('selectedBookmark-title')).toHaveTextContent(clickedBookmark.title);
-        expect(getByTestId('selectedBookmark-createdAt')).toHaveTextContent(clickedBookmark.createdAt);
-        expect(getByTestId('selectedBookmark-width')).toHaveTextContent(clickedBookmark.width.toString());
-        expect(getByTestId('selectedBookmark-height')).toHaveTextContent(clickedBookmark.height.toString());
-        expect(getByTestId('selectedBookmark-keywords')).toHaveTextContent(clickedBookmark.keywords.join(', '));
+        expect(screen.getByTestId('selectedBookmark')).toBeInTheDocument();
+        expect(screen.getByTestId('selectedBookmark-id')).toHaveTextContent(clickedBookmark.id);
+        expect(screen.getByTestId('selectedBookmark-url')).toHaveTextContent(clickedBookmark.url);
+        expect(screen.getByTestId('selectedBookmark-author')).toHaveTextContent(clickedBookmark.author);
+        expect(screen.getByTestId('selectedBookmark-title')).toHaveTextContent(clickedBookmark.title);
+        expect(screen.getByTestId('selectedBookmark-createdAt')).toHaveTextContent(clickedBookmark.createdAt);
+        expect(screen.getByTestId('selectedBookmark-width')).toHaveTextContent(clickedBookmark.width.toString());
+        expect(screen.getByTestId('selectedBookmark-height')).toHaveTextContent(clickedBookmark.height.toString());
+        expect(screen.getByTestId('selectedBookmark-keywords')).toHaveTextContent(clickedBookmark.keywords.join(', '));
       });
     });
   });
