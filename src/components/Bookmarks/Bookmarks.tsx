@@ -12,6 +12,7 @@ import {
   DeleteButton,
 } from 'src/components/Bookmarks/Bookmarks.styles';
 import { Bookmark } from 'src/types/bookmarks.types';
+import { RoutePath } from 'src/types/routing.types';
 
 interface Props {
   className?: string;
@@ -50,7 +51,7 @@ const Bookmarks: FunctionComponent<Props> = ({
           <Toolbar>
             <ModifyButton
               data-testid={`bookmark-${bookmark.id}-modifyBtn`}
-              type="button"
+              to={RoutePath.BookmarkEdition.replace(':bookmarkId', bookmark.id)}
             >
               Modify
             </ModifyButton>

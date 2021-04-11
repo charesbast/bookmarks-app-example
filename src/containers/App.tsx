@@ -1,32 +1,33 @@
-import { History, createBrowserHistory } from 'history';
 import React, { FunctionComponent } from 'react';
 import {
-  Router,
   Switch,
   Route,
   Redirect,
-} from 'react-router';
+} from 'react-router-dom';
 
+import BookmarkEditionPage from 'src/containers/BookmarkEditionPage/BookmarkEditionPage';
 import BookmarksPage from 'src/containers/BookmarksPage/BookmarksPage';
 import { BookmarksProvider } from 'src/context/bookmarks/bookmarkContext';
+import { RoutePath } from 'src/types/routing.types';
 
-interface Props {
-  history?: History;
-}
+const App: FunctionComponent = () => (
+  <BookmarksProvider>
+    <Switch>
+      <Route
+        path={RoutePath.Bookmarks}
+        component={BookmarksPage}
+        exact
+      />
+      <Route
+        path={RoutePath.BookmarkEdition}
+        component={BookmarkEditionPage}
+      />
 
-const App: FunctionComponent<Props> = ({ history }) => (
-  <Router history={history ?? createBrowserHistory()}>
-    <BookmarksProvider>
-      <Switch>
-        <Route path="/bookmarks" component={BookmarksPage} />
-
-        <Route path="*">
-          <Redirect to="/bookmarks" />
-        </Route>
-      </Switch>
-    </BookmarksProvider>
-
-  </Router>
+      <Route>
+        <Redirect to={RoutePath.Bookmarks} />
+      </Route>
+    </Switch>
+  </BookmarksProvider>
 );
 
 export default App;

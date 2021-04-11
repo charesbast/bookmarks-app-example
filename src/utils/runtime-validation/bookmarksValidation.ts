@@ -25,7 +25,7 @@ export function isBookmark(data: any): data is Bookmark {
   }
 
   return data.duration
-    ? typeof data?.duration !== 'number'
+    ? typeof data?.duration === 'number'
     : true;
 }
 
