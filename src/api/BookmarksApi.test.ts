@@ -100,6 +100,7 @@ describe('BookmarksApi', () => {
         width: 100,
         height: 100,
         author_name: 'author',
+        duration: 300,
       };
       fetchSpy.mockResolvedValue({
         json: () => Promise.resolve(completeMetadata),

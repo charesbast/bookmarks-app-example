@@ -1,6 +1,6 @@
 import { render, RenderResult } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
 
 import App from 'src/containers/App';
@@ -15,11 +15,9 @@ export interface RenderAppConfig {
   will prevent us from refactoring every calls in the tests
 */
 export function renderApp({ route }: RenderAppConfig): RenderResult {
-  const history = createMemoryHistory({
-    ...route ? { initialEntries: [route] } : {},
-  });
-
   return render(
-    <App history={history} />,
+    <MemoryRouter initialEntries={[route]}>
+      <App />
+    </MemoryRouter>,
   );
 }

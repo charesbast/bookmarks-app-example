@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 
 export const BookmarkListItem = styled.div`
   padding: 10px;
@@ -46,22 +47,25 @@ export const Toolbar = styled.div`
   }
 `;
 
-const BaseButton = styled.button`
+const BaseButtonCSS = css`
   border: none;
   color: white;
   border-radius: 2px;
   padding: 5px 10px;
+  font-size: 12px;
   
   &:hover {
     cursor: pointer;
   }
 `;
 
-export const ModifyButton = styled(BaseButton)`
+export const ModifyButton = styled(Link)`
+  ${BaseButtonCSS};
   background-color: #2196f3;
 `;
 
-export const DeleteButton = styled(BaseButton)`
+export const DeleteButton = styled.button`
+  ${BaseButtonCSS};
   background-color: #f44336;
 `;
 

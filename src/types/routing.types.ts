@@ -1,3 +1,4 @@
 export enum RoutePath {
-  Bookmarks = '/bookmarks',
+  Bookmarks = '/',
+  BookmarkEdition = '/edition/:bookmarkId',
 }
