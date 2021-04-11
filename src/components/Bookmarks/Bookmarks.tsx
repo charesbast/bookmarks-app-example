@@ -16,37 +16,59 @@ import { Bookmark } from 'src/types/bookmarks.types';
 interface Props {
   className?: string;
   bookmarks: Bookmark[];
+  onBookmarkClicked: (bookmark: Bookmark) => void;
 }
 
 const Bookmarks: FunctionComponent<Props> = ({
   className,
   bookmarks,
-}) => (
-  <Container className={className}>
-    {bookmarks.map((bookmark) => (
-      <BookmarkListItem key={bookmark.id}>
-        <Title>
-          <Url>{bookmark.url}</Url>
-          {bookmark.keywords.map((keyword, idx) => (
-            <Keyword key={idx}>{keyword}</Keyword>
-          ))}
-        </Title>
+  onBookmarkClicked,
+}) => {
+  return (
+    <Container className={className}>
+      {bookmarks.map((bookmark) => (
+        <BookmarkListItem
+          data-testid={`bookmark-${bookmark.id}`}
+          key={bookmark.id}
+          onClick={onListItemClicked(bookmark)}
+        >
+          <Title data-testid={`bookmark-${bookmark.id}-title`}>
+            <Url>{bookmark.url}</Url>
+            {bookmark.keywords.map((keyword, idx) => (
+              <Keyword key={idx}>{keyword}</Keyword>
+            ))}
+          </Title>
 
-        <Metadata>
-          {bookmark.title}
-          {', '}
-          {bookmark.author}
-          {', '}
-          {bookmark.createdAt}
-        </Metadata>
+          <Metadata data-testid={`bookmark-${bookmark.id}-metadata`}>
+            {bookmark.title}
+            {', '}
+            {bookmark.author}
+            {', '}
+            {bookmark.createdAt}
+          </Metadata>
 
-        <Toolbar>
-          <ModifyButton type="button">Modify</ModifyButton>
-          <DeleteButton type="button">Delete</DeleteButton>
-        </Toolbar>
-      </BookmarkListItem>
-    ))}
-  </Container>
-);
+          <Toolbar>
+            <ModifyButton
+              data-testid={`bookmark-${bookmark.id}-modifyBtn`}
+              type="button"
+            >
+              Modify
+            </ModifyButton>
+            <DeleteButton
+              data-testid={`bookmark-${bookmark.id}-deleteBtn`}
+              type="button"
+            >
+              Delete
+            </DeleteButton>
+          </Toolbar>
+        </BookmarkListItem>
+      ))}
+    </Container>
+  );
+
+  function onListItemClicked(bookmark: Bookmark) {
+    return () => onBookmarkClicked(bookmark);
+  }
+};
 
 export default Bookmarks;
