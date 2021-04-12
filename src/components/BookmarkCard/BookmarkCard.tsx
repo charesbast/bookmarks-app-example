@@ -29,7 +29,10 @@ const BookmarkCard: FunctionComponent<Props> = ({
     >
       {bookmarkKeys.map((key) => {
         const keyValue = bookmark[key];
-        if (key === 'keywords' && !showKeywords) {
+        if (
+          !keyValue
+          || (key === 'keywords' && !showKeywords)
+        ) {
           return null;
         }
         return (
@@ -40,7 +43,7 @@ const BookmarkCard: FunctionComponent<Props> = ({
             <b>{key}</b>
             {': '}
             {Array.isArray(keyValue)
-              ? keyValue.join(', ')
+              ? `[${keyValue.join(', ')}]`
               : keyValue}
           </Value>
         );

@@ -17,7 +17,7 @@ export function isBookmark(data: any): data is Bookmark {
     || typeof data?.url !== 'string'
     || typeof data?.title !== 'string'
     || typeof data?.author !== 'string'
-    || typeof data?.createdAt !== 'string'
+    || (data.createdAt && typeof data.createdAt !== 'string')
     || typeof data?.width !== 'number'
     || typeof data?.height !== 'number'
   ) {

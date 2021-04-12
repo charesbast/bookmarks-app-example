@@ -1,12 +1,8 @@
 import { Bookmark } from 'src/types/bookmarks.types';
 import { isBookmark, isBookmarks } from 'src/utils/runtime-validation/bookmarksValidation';
-// import { mockedBookmarkList } from 'src/utils/testing/mocks/bookmarkMocks';
 
 export const BOOKMARKS_SESSION_STORAGE_KEY = 'my-bookmarks';
 export const NO_EMBED_BASE_URL = 'https://noembed.com/embed';
-
-/* TODO: to remove */
-// sessionStorage.setItem(BOOKMARKS_SESSION_STORAGE_KEY, JSON.stringify(mockedBookmarkList));
 
 function getSessionStorageBookmarks(): unknown {
   const rawStorageData = sessionStorage.getItem(BOOKMARKS_SESSION_STORAGE_KEY);
@@ -54,7 +50,7 @@ async function createBookmark(url: string): Promise<Bookmark> {
     url: metadata.url,
     title: metadata.title,
     author: metadata.author_name,
-    createdAt: metadata.upload_date,
+    createdAt: metadata.upload_date ?? null,
     width: metadata.width,
     height: metadata.height,
     duration: metadata.duration,

@@ -3,7 +3,7 @@ export interface CommonBookmarkData {
   url: string;
   title: string;
   author: string;
-  createdAt: string;
+  createdAt: string | null;
   keywords: string[];
 }
 

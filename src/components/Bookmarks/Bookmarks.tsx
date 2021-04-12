@@ -29,6 +29,10 @@ const Bookmarks: FunctionComponent<Props> = ({
 }) => {
   return (
     <Container className={className}>
+      {bookmarks.length === 0 && (
+        <p>No bookmarks saved yet !</p>
+      )}
+
       {bookmarks.map((bookmark) => (
         <BookmarkListItem
           data-testid={`bookmark-${bookmark.id}`}
@@ -74,7 +78,10 @@ const Bookmarks: FunctionComponent<Props> = ({
   );
 
   function onDeleteButtonClicked(bookmarkId: string) {
-    return () => onDeleteBookmark(bookmarkId);
+    return (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      onDeleteBookmark(bookmarkId);
+    };
   }
 
   function onListItemClicked(bookmark: Bookmark) {
