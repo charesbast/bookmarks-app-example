@@ -11,6 +11,7 @@ import { Bookmark } from 'src/types/bookmarks.types';
 export interface UseBookmark {
   bookmarks: Bookmark[];
   addBookmark: (newBookmark: Bookmark) => void;
+  updateBookmark: (bookmarkId: string, newBookmark: Bookmark) => void;
   deleteBookmark: (id: string) => void;
 }
 
@@ -22,6 +23,7 @@ export const BookmarksProvider: FunctionComponent = (props) => {
   const hookValue: UseBookmark = useMemo(() => ({
     bookmarks,
     addBookmark,
+    updateBookmark,
     deleteBookmark,
   }), [bookmarks]);
 
@@ -35,6 +37,17 @@ export const BookmarksProvider: FunctionComponent = (props) => {
 
   function deleteBookmark(id: string): void {
     const newBookmarks = bookmarks.filter((bookmark) => bookmark.id !== id);
+    updateBookmarks(newBookmarks);
+  }
+
+  function updateBookmark(bookmarkId: string, newBookmark: Bookmark): void {
+    const bookmarkIndex = bookmarks.findIndex(({ id }) => id === bookmarkId);
+    if (bookmarkIndex === -1) {
+      return;
+    }
+
+    const newBookmarks = [...bookmarks];
+    newBookmarks[bookmarkIndex] = newBookmark;
     updateBookmarks(newBookmarks);
   }
 
