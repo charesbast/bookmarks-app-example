@@ -29,6 +29,10 @@ const Bookmarks: FunctionComponent<Props> = ({
 }) => {
   return (
     <Container className={className}>
+      {bookmarks.length === 0 && (
+        <p>No bookmarks saved yet !</p>
+      )}
+
       {bookmarks.map((bookmark) => (
         <BookmarkListItem
           data-testid={`bookmark-${bookmark.id}`}

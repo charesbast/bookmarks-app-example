@@ -1,6 +1,7 @@
 import { RenderResult, screen } from '@testing-library/react';
 
 import BookmarksApi from 'src/api/BookmarksApi';
+import { ITEMS_PER_PAGE } from 'src/containers/BookmarksPage/BookmarksPage';
 import { RoutePath } from 'src/types/routing.types';
 import { mockedBookmarkList } from 'src/utils/testing/mocks/bookmarkMocks';
 import { renderApp } from 'src/utils/testing/testRenderer';
@@ -47,24 +48,26 @@ describe('Bookmarks page rendering tests', () => {
       expect(getByRole('heading', { name: 'My bookmarks' })).toBeInTheDocument();
     });
 
-    it('Should display the common information of the all the bookmarks', () => {
+    it('Should display the common information of the bookmarks of the first page', () => {
       const { getByTestId } = renderBookmarksPage();
 
-      mockedBookmarkList.forEach((bookmark) => {
-        const titleContent = getByTestId(`bookmark-${bookmark.id}-title`);
-        expect(titleContent).toHaveTextContent(bookmark.url);
-        bookmark.keywords.forEach((keyword) => {
-          expect(titleContent).toHaveTextContent(keyword);
+      mockedBookmarkList
+        .slice(0, ITEMS_PER_PAGE)
+        .forEach((bookmark) => {
+          const titleContent = getByTestId(`bookmark-${bookmark.id}-title`);
+          expect(titleContent).toHaveTextContent(bookmark.url);
+          bookmark.keywords.forEach((keyword) => {
+            expect(titleContent).toHaveTextContent(keyword);
+          });
+
+          const metadataContent = getByTestId(`bookmark-${bookmark.id}-metadata`);
+          expect(metadataContent).toHaveTextContent(bookmark.title);
+          expect(metadataContent).toHaveTextContent(bookmark.author);
+          expect(metadataContent).toHaveTextContent(bookmark.createdAt ?? '');
+
+          expect(getByTestId(`bookmark-${bookmark.id}-modifyBtn`)).toHaveTextContent('Modify');
+          expect(getByTestId(`bookmark-${bookmark.id}-deleteBtn`)).toHaveTextContent('Delete');
         });
-
-        const metadataContent = getByTestId(`bookmark-${bookmark.id}-metadata`);
-        expect(metadataContent).toHaveTextContent(bookmark.title);
-        expect(metadataContent).toHaveTextContent(bookmark.author);
-        expect(metadataContent).toHaveTextContent(bookmark.createdAt);
-
-        expect(getByTestId(`bookmark-${bookmark.id}-modifyBtn`)).toHaveTextContent('Modify');
-        expect(getByTestId(`bookmark-${bookmark.id}-deleteBtn`)).toHaveTextContent('Delete');
-      });
     });
   });
 
@@ -96,7 +99,7 @@ describe('Bookmarks page rendering tests', () => {
         expect(screen.getByTestId('selectedBookmark-url')).toHaveTextContent(clickedBookmark.url);
         expect(screen.getByTestId('selectedBookmark-author')).toHaveTextContent(clickedBookmark.author);
         expect(screen.getByTestId('selectedBookmark-title')).toHaveTextContent(clickedBookmark.title);
-        expect(screen.getByTestId('selectedBookmark-createdAt')).toHaveTextContent(clickedBookmark.createdAt);
+        expect(screen.getByTestId('selectedBookmark-createdAt')).toHaveTextContent(clickedBookmark.createdAt ?? '');
         expect(screen.getByTestId('selectedBookmark-width')).toHaveTextContent(clickedBookmark.width.toString());
         expect(screen.getByTestId('selectedBookmark-height')).toHaveTextContent(clickedBookmark.height.toString());
         expect(screen.getByTestId('selectedBookmark-keywords')).toHaveTextContent(clickedBookmark.keywords.join(', '));

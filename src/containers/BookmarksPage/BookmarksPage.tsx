@@ -3,7 +3,7 @@ import React, { FunctionComponent, useState } from 'react';
 import AddBookmarkForm from 'src/components/AddBookmarkForm/AddBookmarkForm';
 import BookmarkCard from 'src/components/BookmarkCard/BookmarkCard';
 import Bookmarks from 'src/components/Bookmarks/Bookmarks';
-import { useBookmarks } from 'src/context/bookmarks/bookmarkContext';
+import { useBookmarks, usePaginatedBookmarks } from 'src/context/bookmarks/bookmarkContext';
 import { Bookmark } from 'src/types/bookmarks.types';
 
 import {
@@ -14,17 +14,20 @@ import {
   RightPanel,
 } from './BookmarksPage.styles';
 
-const ITEMS_PER_PAGE = 3;
+export const ITEMS_PER_PAGE = 3;
 
 const BookmarksPage: FunctionComponent = () => {
   const {
     bookmarks,
+    currentPage,
+    nbPages,
+    selectPage,
+  } = usePaginatedBookmarks(1, ITEMS_PER_PAGE);
+  const {
     addBookmark,
     deleteBookmark,
   } = useBookmarks();
   const [selectedBookmark, selectBookmark] = useState<Bookmark | null>(null);
-
-  const nbPages = Math.ceil(bookmarks.length / ITEMS_PER_PAGE);
 
   return (
     <Container>
@@ -38,11 +41,12 @@ const BookmarksPage: FunctionComponent = () => {
           <Bookmarks
             bookmarks={bookmarks}
             onBookmarkClicked={selectBookmark}
-            onDeleteBookmark={deleteBookmark}
+            onDeleteBookmark={onDeleteBookmark}
           />
           {nbPages > 1 && (
             <StyledPagination
               count={nbPages}
+              onChange={(_, newPage) => selectPage(newPage)}
               showFirstButton
               showLastButton
             />
@@ -62,6 +66,18 @@ const BookmarksPage: FunctionComponent = () => {
       </MainSection>
     </Container>
   );
+
+  function onDeleteBookmark(id: string): void {
+    if (bookmarks.length > 1) {
+      deleteBookmark(id);
+    } else {
+      // last item of that page, going to previous page (if possible) to display some bookmarks
+      deleteBookmark(id);
+      if (currentPage > 1) {
+        selectPage(currentPage - 1);
+      }
+    }
+  }
 };
 
 export default BookmarksPage;

@@ -128,4 +128,21 @@ describe('BookmarksPage actions tests', () => {
       expect(BookmarksApi.saveBookmarks).toHaveBeenCalledWith(keptBookmarks);
     });
   });
+
+  describe('When changing the pagination page', () => {
+    function clickOnPage(page: number): void {
+      screen.getByRole('button', { name: `Go to page ${page}` }).click();
+    }
+
+    it('Should update the displayed list', () => {
+      renderBookmarksPage();
+
+      clickOnPage(2);
+
+      expect(screen.queryByTestId(`bookmark-${mockedBookmarkList[0].id}`)).not.toBeInTheDocument();
+      expect(screen.queryByTestId(`bookmark-${mockedBookmarkList[1].id}`)).not.toBeInTheDocument();
+      expect(screen.queryByTestId(`bookmark-${mockedBookmarkList[2].id}`)).not.toBeInTheDocument();
+      expect(screen.queryByTestId(`bookmark-${mockedBookmarkList[3].id}`)).toBeInTheDocument();
+    });
+  });
 });

@@ -57,6 +57,7 @@ const BookmarkEditionPage: FunctionComponent = () => {
         keywords,
       });
 
+      // eslint-disable-next-line no-alert
       alert('Bookmark updated !');
     }
   }
