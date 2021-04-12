@@ -55,7 +55,7 @@ Additional information:
 - The page url is ``/edition/:bookmarkId``
 - If the bookmark id is not found, a redirection to ``/bookmarks`` is done 
 
-## 5 - Edit a bookmark
+## 5 - Edit a bookmark keywords
 As a user on a bookmark edition page
 
 When I fill the edition form and click on the submit button
@@ -63,7 +63,7 @@ When I fill the edition form and click on the submit button
 Then the bookmark data is updated
 
 Additional information:
-- All bookmark fields are editable
+- only keywords are editable
 - Keywords can be added, modified or deleted
 - When the form is submitted, a success notification appear
 
