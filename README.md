@@ -42,7 +42,7 @@ Then I see my created bookmark on top my list
 Additional information:
 - The text input + button (forming together the CTA, call-to-action) is displayed on top on the list
 - When the link is submitted, its metadata is fetched using `https://noembed.com/` API.
-- If the link metadata can't be fetched (broken link), a notification is displayed to notify the user
+- If the link metadata can't be fetched (broken link), an error message is displayed
 
 ## 4 - Go to a bookmark edition page
 As a user on the home page
@@ -53,7 +53,7 @@ Then I navigate to the modification page
 
 Additional information:
 - The page url is ``/edition/:bookmarkId``
-- If the bookmark id is not found, a redirection to ``/bookmarks`` is done 
+- If the bookmark id is not found, a redirection to ``/`` is done 
 
 ## 5 - Edit a bookmark keywords
 As a user on a bookmark edition page
@@ -90,9 +90,7 @@ Then the next items of my list are displayed
 
 Additional information:
 - All pages numbers are displayed below the list
-- The current page number is underlined
-- The current pagination page can be set from the query param "page": `/home?page=2 -> dislpays the second page of the pagination`
-- If the requested page can't be displayed (incorrect query param, requested page not found), then the first page is used as a fallback
+- The current page number is visible
 
 
 -----------------------
