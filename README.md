@@ -67,13 +67,6 @@ Additional information:
 - Keywords can be added, modified or deleted
 - When the form is submitted, a success notification appear
 
-## 5 - Delete a bookmark
-As a user on the home page
-
-When I click on the "Delete" CTA of a bookmark from the list
-
-Then the bookmark is deleted from my list (and from the session storage)
-
 ## 6 - Add a link to the home page
 As a user on the edition page
 
@@ -81,7 +74,14 @@ When I click to the "Return" button
 
 Then I am redirected to the bookmarks page
 
-##7 - Enable paginated list navigation
+## 7 - Delete a bookmark
+As a user on the home page
+
+When I click on the "Delete" CTA of a bookmark from the list
+
+Then the bookmark is deleted from my list (and from the session storage)
+
+## 8 - Enable paginated list navigation
 As a user on the home page having more than 5 bookmarks
 
 When I click on the next pagination number

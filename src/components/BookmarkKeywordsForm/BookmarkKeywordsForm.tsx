@@ -70,9 +70,10 @@ const BookmarkKeywordsForm: FunctionComponent<Props> = ({
 
   function addNewKeyword(): void {
     const keywordAlreadyExists = !!keywords.find((value) => value === newKeyword);
-    return keywordAlreadyExists
-      ? setNewKeyword('')
-      : setKeywords([...keywords, newKeyword]);
+    if (!keywordAlreadyExists) {
+      setKeywords([...keywords, newKeyword]);
+    }
+    setNewKeyword('');
   }
 
   function removeKeyword(value: string) {
