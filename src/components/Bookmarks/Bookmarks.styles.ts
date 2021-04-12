@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
+import Badge from 'src/components/Badge/Badge';
+
 export const BookmarkListItem = styled.div`
   padding: 10px;
   box-shadow: 
@@ -27,13 +29,8 @@ export const Url = styled.h1`
   }
 `;
 
-export const Keyword = styled.div`
+export const Keyword = styled(Badge)`
   margin-left: 10px;
-  font-size: 12px;
-  background-color: #2196f3;
-  color: white;
-  padding: 0 5px;
-  border-radius: 2px;
 `;
 
 export const Metadata = styled.p`

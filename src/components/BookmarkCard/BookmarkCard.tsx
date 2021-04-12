@@ -11,12 +11,14 @@ interface Props {
   className?: string;
   dataTestId?: string;
   bookmark: Bookmark;
+  showKeywords?: boolean;
 }
 
 const BookmarkCard: FunctionComponent<Props> = ({
   className,
   dataTestId,
   bookmark,
+  showKeywords = true,
 }) => {
   const bookmarkKeys = Object.keys(bookmark) as Array<keyof Bookmark>;
 
@@ -27,6 +29,9 @@ const BookmarkCard: FunctionComponent<Props> = ({
     >
       {bookmarkKeys.map((key) => {
         const keyValue = bookmark[key];
+        if (key === 'keywords' && !showKeywords) {
+          return null;
+        }
         return (
           <Value
             key={key}

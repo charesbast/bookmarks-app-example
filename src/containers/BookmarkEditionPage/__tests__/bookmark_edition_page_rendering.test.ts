@@ -23,12 +23,33 @@ describe('Bookmark edition page rendering tests', () => {
   });
 
   describe('When the bookmark id is found', () => {
-    const bookmarkId = mockedBookmarkList[1].id;
+    const editedBookmark = mockedBookmarkList[1];
+    const bookmarkId = editedBookmark.id;
 
     it('Should render the page title', () => {
       renderEditionPage(bookmarkId);
 
       expect(screen.queryByRole('heading', { name: 'Bookmark edition' })).toBeInTheDocument();
+    });
+
+    it('Should render an input to add a new keyword', () => {
+      renderEditionPage(bookmarkId);
+
+      expect(screen.getByPlaceholderText('Type a new keyword')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Add' })).toBeInTheDocument();
+    });
+
+    it('Should render the current bookmark keywords', () => {
+      renderEditionPage(bookmarkId);
+
+      editedBookmark.keywords.forEach((keyword) => {
+        expect(screen.getByTestId(`keyword-${keyword}`)).toHaveTextContent(keyword);
+      });
+    });
+
+    it('Should render a submit button for the form', () => {
+      renderEditionPage(bookmarkId);
+      expect(screen.getByRole('button', { name: 'Submit changes' })).toBeInTheDocument();
     });
   });
 });

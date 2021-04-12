@@ -36,7 +36,10 @@ const Bookmarks: FunctionComponent<Props> = ({
           <Title data-testid={`bookmark-${bookmark.id}-title`}>
             <Url>{bookmark.url}</Url>
             {bookmark.keywords.map((keyword, idx) => (
-              <Keyword key={idx}>{keyword}</Keyword>
+              <Keyword
+                key={idx}
+                label={keyword}
+              />
             ))}
           </Title>
 
