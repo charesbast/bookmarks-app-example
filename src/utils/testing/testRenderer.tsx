@@ -4,10 +4,9 @@ import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
 
 import App from 'src/containers/App';
-import { RoutePath } from 'src/types/routing.types';
 
 export interface RenderAppConfig {
-  route?: RoutePath;
+  route?: string;
 }
 
 /*
@@ -16,7 +15,7 @@ export interface RenderAppConfig {
 */
 export function renderApp({ route }: RenderAppConfig): RenderResult {
   return render(
-    <MemoryRouter initialEntries={[route]}>
+    <MemoryRouter initialEntries={route ? [route] : []}>
       <App />
     </MemoryRouter>,
   );

@@ -109,7 +109,6 @@ describe('BookmarksPage actions tests', () => {
       clickOnModifyBtn(clickedBookmark.id);
 
       expect(screen.getByRole('heading', { name: 'Bookmark edition' })).toBeInTheDocument();
-      expect(await screen.findByRole('heading', { name: 'Bookmark edition' })).toBeInTheDocument();
     });
   });
 });
