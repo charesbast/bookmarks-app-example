@@ -20,6 +20,7 @@ const BookmarksPage: FunctionComponent = () => {
   const {
     bookmarks,
     addBookmark,
+    deleteBookmark,
   } = useBookmarks();
   const [selectedBookmark, selectBookmark] = useState<Bookmark | null>(null);
 
@@ -37,6 +38,7 @@ const BookmarksPage: FunctionComponent = () => {
           <Bookmarks
             bookmarks={bookmarks}
             onBookmarkClicked={selectBookmark}
+            onDeleteBookmark={deleteBookmark}
           />
           {nbPages > 1 && (
             <StyledPagination

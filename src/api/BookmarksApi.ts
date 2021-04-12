@@ -39,7 +39,7 @@ function saveBookmarks(bookmarks: Bookmark[]): void {
 
 export const INCOMPLETE_BOOKMARK_ERROR = `Malformed bookmark: some metadata are missing, possible reasons:
   - at the moment only urls from Vimo and Flickr are officially supported
-  - noembed does not fetch correctly those metadata anymore`;
+  - noembed did not fetch all required metadata`;
 
 async function createBookmark(url: string): Promise<Bookmark> {
   const response = await fetch(`${NO_EMBED_BASE_URL}?url=${encodeURIComponent(url)}`);

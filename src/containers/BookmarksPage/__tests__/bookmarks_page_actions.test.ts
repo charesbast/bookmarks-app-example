@@ -16,6 +16,7 @@ const renderBookmarksPage = (): RenderResult => renderApp({
 
 const createBookmarkSpy = jest.spyOn(BookmarksApi, 'createBookmark');
 const getBookmarksSpy = jest.spyOn(BookmarksApi, 'getBookmarks');
+jest.spyOn(BookmarksApi, 'saveBookmarks');
 
 describe('BookmarksPage actions tests', () => {
   beforeEach(() => {
@@ -102,13 +103,29 @@ describe('BookmarksPage actions tests', () => {
       screen.getByTestId(`bookmark-${bookmarkId}-modifyBtn`).click();
     }
 
-    it('Should redirect to the correct edition page when clicking on a bookmark modify button', async () => {
+    it('Should redirect to the correct edition page when clicking on a bookmark modify button', () => {
       const clickedBookmark = mockedBookmarkList[1];
       renderBookmarksPage();
 
       clickOnModifyBtn(clickedBookmark.id);
 
       expect(screen.getByRole('heading', { name: 'Bookmark edition' })).toBeInTheDocument();
+    });
+  });
+
+  describe('Deleting a bookmark', () => {
+    function clickOnDeleteBookmarkBtn(bookmarkId: string): void {
+      screen.getByTestId(`bookmark-${bookmarkId}-deleteBtn`).click();
+    }
+
+    it('Should remove the selected bookmark from the saved list', () => {
+      const [deletedBookmark, ...keptBookmarks] = mockedBookmarkList;
+
+      renderBookmarksPage();
+      clickOnDeleteBookmarkBtn(deletedBookmark.id);
+
+      expect(screen.queryByTestId(`bookmark-${deletedBookmark.id}`)).not.toBeInTheDocument();
+      expect(BookmarksApi.saveBookmarks).toHaveBeenCalledWith(keptBookmarks);
     });
   });
 });

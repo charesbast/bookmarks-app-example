@@ -18,12 +18,14 @@ interface Props {
   className?: string;
   bookmarks: Bookmark[];
   onBookmarkClicked: (bookmark: Bookmark) => void;
+  onDeleteBookmark: (bookmarkId: string) => void;
 }
 
 const Bookmarks: FunctionComponent<Props> = ({
   className,
   bookmarks,
   onBookmarkClicked,
+  onDeleteBookmark,
 }) => {
   return (
     <Container className={className}>
@@ -61,6 +63,7 @@ const Bookmarks: FunctionComponent<Props> = ({
             <DeleteButton
               data-testid={`bookmark-${bookmark.id}-deleteBtn`}
               type="button"
+              onClick={onDeleteButtonClicked(bookmark.id)}
             >
               Delete
             </DeleteButton>
@@ -69,6 +72,10 @@ const Bookmarks: FunctionComponent<Props> = ({
       ))}
     </Container>
   );
+
+  function onDeleteButtonClicked(bookmarkId: string) {
+    return () => onDeleteBookmark(bookmarkId);
+  }
 
   function onListItemClicked(bookmark: Bookmark) {
     return () => onBookmarkClicked(bookmark);
