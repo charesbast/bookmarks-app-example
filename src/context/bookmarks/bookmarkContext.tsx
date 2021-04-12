@@ -16,14 +16,6 @@ export interface UseBookmark {
 
 const BookmarkContext = createContext<UseBookmark | undefined>(undefined);
 
-export function useBookmarks(): UseBookmark {
-  const context = useContext(BookmarkContext);
-  if (!context) {
-    throw new Error('useBookmarks must be used within a BookmarksProvider');
-  }
-  return context;
-}
-
 export const BookmarksProvider: FunctionComponent = (props) => {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(BookmarksApi.getBookmarks());
 
@@ -51,3 +43,20 @@ export const BookmarksProvider: FunctionComponent = (props) => {
     setBookmarks(updatedBookmarks);
   }
 };
+
+/*
+* Hooks
+* */
+
+export function useBookmarks(): UseBookmark {
+  const context = useContext(BookmarkContext);
+  if (!context) {
+    throw new Error('useBookmarks must be used within a BookmarksProvider');
+  }
+  return context;
+}
+
+export function useBookmark(id: string): Bookmark | undefined {
+  const { bookmarks } = useBookmarks();
+  return bookmarks.find((bookmark) => bookmark.id === id);
+}
